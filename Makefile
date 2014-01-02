@@ -31,7 +31,9 @@ priv/erws.rel: src/erws.rel priv/release.es
 	escript priv/release.es $< $@
 
 priv/release.es:
-	curl -s https://raw.github.com/saleyn/util/master/bin/release.es
+	curl -s https://raw.github.com/saleyn/util/master/bin/release.es | \
+        awk '/^%%!/ { print "%%! $(LIB_ARGS)" } !/^%%!/ {print}' > $@
+
 
 priv/erlb.js:
 	curl -s -o $@ https://raw.github.com/saleyn/erlb.js/master/erlb.js
